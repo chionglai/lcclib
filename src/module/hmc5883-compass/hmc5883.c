@@ -151,7 +151,7 @@ int32_t hmc5883_read(hmc5883_t *hmc5883, int16_t* x, int16_t* y, int16_t* z) {
 int32_t hmc5883_readGauss(hmc5883_t *hmc5883, float* x, float* y, float* z) {
 	int16_t rawX, rawY, rawZ;
 	uint8_t gain;
-	float factor;
+	float factor = 1.0f;
 	int32_t status;
 
 	if ((status = hmc5883_read(hmc5883, &rawX, &rawY, &rawZ)) != STATUS_OK)
