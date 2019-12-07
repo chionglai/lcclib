@@ -130,9 +130,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/inc/dsp/chirp.h</locationURI>
 		</link>
 		<link>
+			<name>inc/dsp/limiter.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/inc/dsp/limiter.h</locationURI>
+		</link>
+		<link>
 			<name>inc/dsp/signal.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/inc/dsp/signal.h</locationURI>
+		</link>
+		<link>
+			<name>inc/dsp/tins.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/inc/dsp/tins.h</locationURI>
 		</link>
 		<link>
 			<name>inc/hw/.DS_Store</name>
@@ -273,6 +283,21 @@
 			<name>src/dsp/chirp.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/src/dsp/chirp.c</locationURI>
+		</link>
+		<link>
+			<name>src/dsp/fir.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/src/dsp/fir.c</locationURI>
+		</link>
+		<link>
+			<name>src/dsp/limiter.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/src/dsp/limiter.c</locationURI>
+		</link>
+		<link>
+			<name>src/dsp/tins.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/src/dsp/tins.c</locationURI>
 		</link>
 		<link>
 			<name>src/hw/.DS_Store</name>

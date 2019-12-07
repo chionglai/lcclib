@@ -3,10 +3,14 @@ proj/lcc-osx/Release/
 proj/lcc-osx/Debug/
 proj/lcc-rpi/Release/
 proj/lcc-rpi/Debug/
+proj/test-lcc-pc/Release/
+proj/test-lcc-pc/Debug/
 
 # Build artefact
-*.d
-*.o
+**/*.d
+**/*.o
+**/*.a
+
 
 # OSX file
 *.DS_STORE
