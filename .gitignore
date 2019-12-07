@@ -1,0 +1,12 @@
+# Generated makefiles from eclipse
+proj/lcc-osx/Release/
+proj/lcc-osx/Debug/
+proj/lcc-rpi/Release/
+proj/lcc-rpi/Debug/
+
+# Build artefact
+*.d
+*.o
+
+# OSX file
+*.DS_STORE
