@@ -3,7 +3,7 @@
 #ifndef __FIMATH_H
 #define __FIMATH_H
 
-#include "stdint.h"
+#include <stdint.h>
 
 #define FIMATH_INF				0x7FFFFFFF
 #define FIMATH_NINF				0x80000000
@@ -277,12 +277,25 @@ int32_t fimath_cos(int32_t in);
  */
 int32_t fimath_expAvg(int32_t prevEst, int32_t beta, int32_t currEst, int32_t mBeta, uint8_t numFracBit);
 
+// Internal calculation in 32-bit as opposed to 64-bit above.
+int32_t fimath_expAvg16(int32_t prevEst, int32_t beta, int32_t currEst, int32_t mBeta, uint8_t numFracBit);
+
+
 /**
  * \brief Calculate the absolute value of a signed integer.
  * \param[in] x A signed integer whose absolute value is to be calculated.
  * \return The absolute value of x. If x is 0x80000000, 0x7FFFFFFF is returned.
  */
 int32_t fimath_abs(int32_t x);
+
+/**
+ * @brief Left shift and saturate a fixed point integer.
+ * @param[in] x Value to be shifted and saturated.
+ * @param[in] shift Number of left shift. If 0, the
+ *      input x is returned as it is.
+ * @return Left shift result of x, saturated to be within FIMATH_MIN32 and FIMATH_MAX32.
+ */
+int32_t fimath_shiftAndSat(int32_t x, int32_t shift);
 
 
 #ifdef __cplusplus__

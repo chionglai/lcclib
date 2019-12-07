@@ -305,21 +305,36 @@ int32_t fimath_cos(int32_t in) {
 	return result;
 }
 
-
-// TODO: comment, no overflow guard on addition
+// NOT verified
 int32_t fimath_expAvg(int32_t prevEst, int32_t beta, int32_t currEst, int32_t mBeta, uint8_t numFracBit) {
 	int64_t result64;
-	
+
 	// both operand 0 and 1 have 32-bit word length and numFracBit fractional bits,
 	// and the result will have 64-bit word length and 2*numFracBit fractional bits
 	result64 = ((int64_t) prevEst) * ((int64_t) beta);
-	result64 += ((int64_t) currEst) * ((int64_t) mBeta);
+	result64 = (result64 >> 1) + ((((int64_t) currEst) * ((int64_t) mBeta)) >> 1);    // right shift 1 to guard against addition overflow
+
+	//prevEst = fimath_clip((int32_t) (result64 >> numFracBit), (int32_t) FIMATH_MIN32, FIMATH_MAX32);
 	
-	prevEst = fimath_clip((int32_t) (result64 >> numFracBit), (int32_t) FIMATH_MIN32, FIMATH_MAX32);
-	
+	prevEst = (int32_t) (result64 >> numFracBit);
+	prevEst = fimath_shiftAndSat(prevEst, 1);
 	return prevEst;
 }
 
+// NOT verified
+int32_t fimath_expAvg32(int32_t prevEst, int32_t beta, int32_t currEst, int32_t mBeta, uint8_t numFracBit) {
+    int32_t result32;
+    uint8_t nShift = numFracBit / 2;
+
+    // both operand 0 and 1 have 32-bit word length and numFracBit fractional bits,
+    // and the result will have 64-bit word length and 2*numFracBit fractional bits
+    result32 = (prevEst >> nShift) * (beta >> nShift);
+    result32 = (result32 >> 1) + (((currEst >> nShift) * (mBeta >> nShift)) >> 1);    // right shift 1 to guard against addition overflow
+
+    //prevEst = fimath_clip((int32_t) (result64 >> numFracBit), (int32_t) FIMATH_MIN32, FIMATH_MAX32);
+    prevEst = fimath_shiftAndSat(result32, nShift);
+    return prevEst;
+}
 
 int32_t fimath_abs(int32_t x) {
 	int32_t const mask = x >> (sizeof(int32_t) * 8 - 1);
@@ -331,3 +346,22 @@ int32_t fimath_abs(int32_t x) {
 	return ((x + mask) ^ mask) - (((int32_t) FIMATH_MIN32) == x);
 }
 
+
+int32_t fimath_shiftAndSat(int32_t x, int32_t shift) {
+    uint32_t mask;
+    int32_t temp;
+
+    if (shift == 0) {
+        return x;
+    } else {
+        mask = -(FIMATH_MIN32 >> shift);
+        temp = x & mask;
+        if (temp == mask) {
+            return FIMATH_MIN32;
+        } else if (temp == (mask ^ FIMATH_MIN32)) {
+            return FIMATH_MAX32;
+        } else {
+            return (x << shift);
+        }
+    }
+}

@@ -11,12 +11,16 @@
 #include "util/test_buffer.h"
 #include "util/test_stack.h"
 
+#include "math/test_fimath.h"
+
 
 int main(int argc, char** argv) {
 //	test_bitAll();
 //	test_utilAll();
 //	test_bufferAll();
-	test_stackAll();
+//	test_stackAll();
+
+    test_fimathAll();
 
 	return 0;
 }
